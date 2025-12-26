@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Polymarket BTC 15m Strategy</title>
+  <style>
+    body {
+      background: #0b0b0b;
+      color: #e5e5e5;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+      padding: 32px;
+      max-width: 900px;
+      margin: auto;
+    }
+    h1, h2 {
+      color: #ffffff;
+      border-bottom: 1px solid #222;
+      padding-bottom: 6px;
+    }
+    .box {
+      background: #141414;
+      border: 1px solid #222;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+    .danger {
+      color: #ff6b6b;
+      font-weight: 600;
+    }
+    .ok {
+      color: #4ade80;
+      font-weight: 600;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input {
+      width: 120px;
+      background: #0b0b0b;
+      color: #fff;
+      border: 1px solid #333;
+      padding: 6px;
+      border-radius: 4px;
+      margin-left: 8px;
+    }
+    .result {
+      font-size: 1.1rem;
+      margin-top: 10px;
+    }
+    footer {
+      opacity: 0.6;
+      font-size: 0.9rem;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Polymarket BTC 15-Minute Strategy</h1>
+
+<div class="box">
+  <h2>Core Rules (Non-Negotiable)</h2>
+  <ul>
+    <li>Market: <strong>BTC – 15 minute</strong> only</li>
+    <li>Bet size: <strong>$10–$20 max</strong> (never increase)</li>
+    <li>Entry timing: <strong>~2 minutes before expiry</strong></li>
+    <li>Probability: <strong>≥ 93% and ≤ 97%</strong></li>
+    <li>Price-to-beat distance: <strong>$100 minimum</strong>, prefer $150–$200</li>
+    <li class="danger">NO trade if last 1-min candle is violent or spiky</li>
+  </ul>
+</div>
+
+<div class="box">
+  <h2>Why This Works (When It Works)</h2>
+  <ul>
+    <li>Late-stage certainty beats prediction</li>
+    <li>Price buffer absorbs small wicks</li>
+    <li>Small size prevents single-trade ruin</li>
+    <li class="danger">Fails instantly in high volatility</li>
+  </ul>
+</div>
+
+<div class="box">
+  <h2>Profit Assumptions</h2>
+
+  <label>
+    Trades per day:
+    <input id="trades" type="number" value="8" />
+  </label>
+
+  <label>
+    Win rate (%):
+    <input id="winrate" type="number" value="75" />
+  </label>
+
+  <label>
+    Avg profit per win ($):
+    <input id="win" type="number" value="2.5" />
+  </label>
+
+  <label>
+    Avg loss per loss ($):
+    <input id="loss" type="number" value="15" />
+  </label>
+
+  <div class="result" id="output"></div>
+</div>
+
+<div class="box">
+  <h2>Risk Reality Check</h2>
+  <ul>
+    <li>One bad trade can erase <strong>5–8 wins</strong></li>
+    <li>Increasing size breaks the math</li>
+    <li>More trades ≠ more profit</li>
+    <li class="danger">Calm markets are mandatory</li>
+  </ul>
+</div>
+
+<footer>
+  This is a probabilistic grind, not a get-rich scheme.<br>
+  The goal is survival first, profit second.
+</footer>
+
+<script>
+  function calculate() {
+    const trades = Number(document.getElementById("trades").value);
+    const winrate = Number(document.getElementById("winrate").value) / 100;
+    const win = Number(document.getElementById("win").value);
+    const loss = Number(document.getElementById("loss").value);
+
+    const wins = trades * winrate;
+    const losses = trades * (1 - winrate);
+
+    const daily = (wins * win) - (losses * loss);
+    const monthly = daily * 20;
+
+    document.getElementById("output").innerHTML = `
+      <strong>Estimated PnL</strong><br>
+      Daily: <span class="${daily >= 0 ? 'ok' : 'danger'}">$${daily.toFixed(2)}</span><br>
+      Monthly (20 days): <span class="${monthly >= 0 ? 'ok' : 'danger'}">$${monthly.toFixed(2)}</span>
+    `;
+  }
+
+  document.querySelectorAll("input").forEach(i => {
+    i.addEventListener("input", calculate);
+  });
+
+  calculate();
+</script>
+
+</body>
+</html>
