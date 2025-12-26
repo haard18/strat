@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Polymarket BTC 15m Strategy</title>
+  <title>Polymarket BTC 15m Income Playbook</title>
   <style>
     body {
       background: #0b0b0b;
-      color: #e5e5e5;
+      color: #e6e6e6;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       line-height: 1.6;
       padding: 32px;
@@ -21,16 +21,19 @@
     .box {
       background: #141414;
       border: 1px solid #222;
-      border-radius: 8px;
-      padding: 16px;
-      margin-bottom: 20px;
+      border-radius: 10px;
+      padding: 18px;
+      margin-bottom: 22px;
     }
-    .danger {
-      color: #ff6b6b;
+    .positive {
+      color: #4ade80;
       font-weight: 600;
     }
-    .ok {
-      color: #4ade80;
+    .neutral {
+      color: #a3a3a3;
+    }
+    .warn {
+      color: #fbbf24;
       font-weight: 600;
     }
     label {
@@ -43,15 +46,15 @@
       color: #fff;
       border: 1px solid #333;
       padding: 6px;
-      border-radius: 4px;
+      border-radius: 6px;
       margin-left: 8px;
     }
     .result {
-      font-size: 1.1rem;
-      margin-top: 10px;
+      font-size: 1.15rem;
+      margin-top: 12px;
     }
     footer {
-      opacity: 0.6;
+      opacity: 0.7;
       font-size: 0.9rem;
       margin-top: 40px;
     }
@@ -59,32 +62,41 @@
 </head>
 <body>
 
-<h1>Polymarket BTC 15-Minute Strategy</h1>
+<h1>BTC 15-Minute Polymarket Income Strategy</h1>
 
 <div class="box">
-  <h2>Core Rules (Non-Negotiable)</h2>
+  <h2>Objective</h2>
+  <p>
+    Generate <span class="positive">small, repeatable profits</span> from
+    high-confidence BTC 15-minute markets and periodically
+    <strong>extract funds</strong> rather than compounding risk.
+  </p>
+</div>
+
+<div class="box">
+  <h2>Core Trading Rules</h2>
   <ul>
-    <li>Market: <strong>BTC – 15 minute</strong> only</li>
-    <li>Bet size: <strong>$10–$20 max</strong> (never increase)</li>
-    <li>Entry timing: <strong>~2 minutes before expiry</strong></li>
-    <li>Probability: <strong>≥ 93% and ≤ 97%</strong></li>
-    <li>Price-to-beat distance: <strong>$100 minimum</strong>, prefer $150–$200</li>
-    <li class="danger">NO trade if last 1-min candle is violent or spiky</li>
+    <li>Market: <strong>BTC – 15 minute only</strong></li>
+    <li>Bet size: <strong>$10–$20 per trade</strong></li>
+    <li>Entry window: <strong>~2 minutes before expiry</strong></li>
+    <li>Choose side with <strong>≥ 93% probability (≤ 97%)</strong></li>
+    <li>Price-to-beat distance: <strong>$100 minimum</strong> (ideal: $150–$200)</li>
+    <li class="warn">Skip trades during sudden spikes or unstable candles</li>
   </ul>
 </div>
 
 <div class="box">
-  <h2>Why This Works (When It Works)</h2>
+  <h2>Why This Can Produce Income</h2>
   <ul>
-    <li>Late-stage certainty beats prediction</li>
-    <li>Price buffer absorbs small wicks</li>
-    <li>Small size prevents single-trade ruin</li>
-    <li class="danger">Fails instantly in high volatility</li>
+    <li>Late-stage probabilities are more reliable</li>
+    <li>Price buffer reduces last-minute noise</li>
+    <li>Small sizing allows many attempts without account stress</li>
+    <li>Focus on one market improves judgment</li>
   </ul>
 </div>
 
 <div class="box">
-  <h2>Profit Assumptions</h2>
+  <h2>Profit Estimator</h2>
 
   <label>
     Trades per day:
@@ -110,18 +122,18 @@
 </div>
 
 <div class="box">
-  <h2>Risk Reality Check</h2>
+  <h2>Capital Management Mindset</h2>
   <ul>
-    <li>One bad trade can erase <strong>5–8 wins</strong></li>
-    <li>Increasing size breaks the math</li>
-    <li>More trades ≠ more profit</li>
-    <li class="danger">Calm markets are mandatory</li>
+    <li class="positive">Withdraw profits regularly</li>
+    <li>Do not scale size quickly</li>
+    <li>Consistency beats aggression</li>
+    <li class="neutral">The goal is reliability, not hero trades</li>
   </ul>
 </div>
 
 <footer>
-  This is a probabilistic grind, not a get-rich scheme.<br>
-  The goal is survival first, profit second.
+  This strategy is designed to be <strong>boring, repeatable, and extractive</strong>.<br>
+  If rules are followed, profits can be slowly pulled out without stressing capital.
 </footer>
 
 <script>
@@ -138,9 +150,9 @@
     const monthly = daily * 20;
 
     document.getElementById("output").innerHTML = `
-      <strong>Estimated PnL</strong><br>
-      Daily: <span class="${daily >= 0 ? 'ok' : 'danger'}">$${daily.toFixed(2)}</span><br>
-      Monthly (20 days): <span class="${monthly >= 0 ? 'ok' : 'danger'}">$${monthly.toFixed(2)}</span>
+      <strong>Estimated Returns</strong><br>
+      Daily: <span class="${daily >= 0 ? 'positive' : 'warn'}">$${daily.toFixed(2)}</span><br>
+      Monthly (20 days): <span class="${monthly >= 0 ? 'positive' : 'warn'}">$${monthly.toFixed(2)}</span>
     `;
   }
 
